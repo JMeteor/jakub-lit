@@ -66,7 +66,13 @@ export class JsInputText extends LitElement {
             placeholder=${this.placeholder}
             type="text"
           />
-          ${this.showIcon ? html`<span class="js-icon"></span>` : ''}
+          ${this.showIcon
+            ? html` <js-icon
+                .disabled=${this.disabled}
+                .hierarchy=${this.hierarchy}
+                .size=${this.size}
+              ></js-icon>`
+            : ''}
         </div>
         ${this.showHint || this.showError
           ? html`<p class="js-field_hint"><slot name="hint"></slot></p>`
@@ -84,7 +90,16 @@ export class JsInputText extends LitElement {
       align-items: center;
       position: relative;
     }
+    .js-field_label {
+      color: var(--primary-700);
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: normal;
+      margin-bottom: 4px;
+    }
     .js-field_input {
+      border-color: var(--primary-700);
       border-radius: 8px;
       border-style: solid;
       border-width: 1px;
@@ -99,32 +114,20 @@ export class JsInputText extends LitElement {
         outline: none;
       }
     }
-    .js-field_label {
-      color: var(--primary-700);
-      display: block;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: normal;
-      margin-bottom: 4px;
-    }
     .js-field_hint {
       color: var(--primary-500);
       display: block;
       font-size: 12px;
       margin: 4px 0 0 0;
     }
-    .js-icon {
+
+    js-icon {
       position: absolute;
-      width: 24px;
-      height: 24px;
       right: 16px;
     }
 
     .js-field {
       &.js-field--primary {
-        .js-field_input {
-          border-color: var(--primary-700);
-        }
         & .js-field_label {
           color: var(--primary-700);
         }
@@ -133,23 +136,6 @@ export class JsInputText extends LitElement {
         }
         & .js-icon {
           background: var(--primary-700);
-        }
-      }
-      &.js-field--secondary {
-        & .js-field_input {
-          border-color: var(--secondary-700);
-          &::placeholder {
-            color: var(--secondary-500);
-          }
-        }
-        & .js-field_label {
-          color: var(--secondary-700);
-        }
-        & .js-field_hint {
-          color: var(--secondary-500);
-        }
-        & .js-icon {
-          background: var(--secondary-700);
         }
       }
       &.js-field--disabled {
@@ -163,11 +149,42 @@ export class JsInputText extends LitElement {
             color: var(--primary-300);
           }
         }
-        & .js-icon {
+        & js-icon {
           background: var(--primary-300);
         }
         & .js-field_hint {
           color: var(--primary-300);
+        }
+      }
+      &.js-field--secondary {
+        & .js-field_label {
+          color: var(--secondary-700);
+        }
+        & .js-field_input {
+          border-color: var(--secondary-700);
+          &::placeholder {
+            color: var(--secondary-500);
+          }
+        }
+        & .js-field_hint {
+          color: var(--secondary-500);
+        }
+        & js-icon {
+          background: var(--secondary-700);
+        }
+        &.js-field--disabled {
+          & .js-field_label {
+            color: var(--secondary-300);
+          }
+          & .js-field_input {
+            border-color: var(--secondary-500);
+            &::placeholder {
+              color: var(--secondary-300);
+            }
+          }
+          & .js-field_hint {
+            color: var(--secondary-300);
+          }
         }
       }
       &.js-field--error {
