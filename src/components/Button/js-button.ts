@@ -34,7 +34,7 @@ export class JsButton extends LitElement {
     }
 
     return html`
-      <button class=${classMap(classes)} disabled=${this.disabled}>
+      <button class=${classMap(classes)} ?disabled=${this.disabled}>
         ${this.iconBefore ? html`<span class="js-icon"></span>` : ''}
         <slot></slot>
         ${this.iconAfter ? html`<span class="js-icon"></span>` : ''}

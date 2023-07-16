@@ -10,7 +10,7 @@ export class JsIcon extends LitElement {
   @property({ type: String })
   hierarchy = 'primary'
 
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   disabled = false
 
   render() {
