@@ -7,7 +7,7 @@ import viteLogo from '/vite.svg'
  * An example element.
  *
  * @slot - This element has a slot
- * @csspart button - The button
+ * @csspart Button - The Button
  */
 @customElement('my-element')
 export class MyElement extends LitElement {
@@ -18,7 +18,7 @@ export class MyElement extends LitElement {
   docsHint = 'Click on the Vite and Lit logos to learn more'
 
   /**
-   * The number of times the button has been clicked.
+   * The number of times the Button has been clicked.
    */
   @property({ type: Number })
   count = 0

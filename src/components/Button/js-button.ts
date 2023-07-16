@@ -24,17 +24,27 @@ export class JsButton extends LitElement {
   @property({type: Boolean, reflect: true })
   disabled = false;
 
+  render() {
+    const classes = {
+      'js-button': true,
+      'js-button--md': this.size === 'md',
+      'js-button--sm': this.size === 'sm',
+      'js-button--primary': this.hierarchy === 'primary',
+      'js-button--secondary': this.hierarchy === 'secondary',
+      'js-button--filled': this.type === 'filled',
+      'js-button--outlined': this.type === 'outlined',
+    };
+
+    return html`
+      <button class=${classMap(classes)} .disabled=${this.disabled}>
+        ${this.iconBefore ? html`<span class="js-icon"></span>` : ''}
+        <slot></slot>
+        ${this.iconAfter ? html`<span class="js-icon"></span>` : ''}
+      </button>
+    `;
+  }
+
   static styles = css`
-    :host {
-      --primary-100: #F5ECF9;
-      --primary-300: #D8B2E6;
-      --primary-500: #B973D2;
-      --primary-700: #7E329A;
-      --secondary-100: #FAFAEB;
-      --secondary-300: #EAEBAD;
-      --secondary-500: #D2D44F;
-      --secondary-700: #A2A428;
-    }
     .js-button {
       border-radius: 8px;
       border-width: 1px;
@@ -45,7 +55,7 @@ export class JsButton extends LitElement {
       gap: 8px;
       padding: 12px 24px;
       
-      font-family: 'Inter', sans-serif;
+      font-family: var(--font-inter);
       font-size: 16px;
       font-style: normal;
       font-weight: 400;
@@ -159,25 +169,4 @@ export class JsButton extends LitElement {
       }
     }
   `
-
-  render() {
-    const classes = {
-      'js-button': true,
-      'js-button--md': this.size === 'md',
-      'js-button--sm': this.size === 'sm',
-      'js-button--primary': this.hierarchy === 'primary',
-      'js-button--secondary': this.hierarchy === 'secondary',
-      'js-button--filled': this.type === 'filled',
-      'js-button--outlined': this.type === 'outlined',
-    };
-
-    return html`
-      <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-      <button class=${classMap(classes)} ?disabled=${this.disabled}>
-        ${this.iconBefore ? html`<span class="js-icon"></span>` : ''}
-        <slot></slot>
-        ${this.iconAfter ? html`<span class="js-icon"></span>` : ''}
-      </button>
-    `;
-  }
 }

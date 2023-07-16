@@ -1,0 +1,14 @@
+:root {
+    --base-black: #000;
+    --base-white: #fff;
+    --base-error: #EC1919;
+    --primary-100: #F5ECF9;
+    --primary-300: #D8B2E6;
+    --primary-500: #B973D2;
+    --primary-700: #7E329A;
+    --secondary-100: #FAFAEB;
+    --secondary-300: #EAEBAD;
+    --secondary-500: #D2D44F;
+    --secondary-700: #A2A428;
+    --font-inter: 'Inter', sans-serif;
+}

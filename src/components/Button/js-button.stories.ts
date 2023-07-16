@@ -10,11 +10,11 @@ const  meta = {
     },
     size: {
       control: { type: 'radio' },
-      options: ['sm', 'md']
+      options: ['sm', 'md'],
     },
     hierarchy: {
       control: { type: 'radio' },
-      options: ['primary', 'secondary']
+      options: ['primary', 'secondary'],
     },
     type: {
       control: { type: 'radio' },
