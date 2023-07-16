@@ -99,6 +99,7 @@ export class JsInputText extends LitElement {
       margin-bottom: 4px;
     }
     .js-field_input {
+      box-sizing: border-box;
       border-color: var(--primary-700);
       border-radius: 8px;
       border-style: solid;
@@ -106,6 +107,7 @@ export class JsInputText extends LitElement {
       color: black;
       font-size: 16px;
       min-width: 200px;
+      height: 40px;
       padding: 10px 16px;
       &::placeholder {
         color: var(--primary-300);
@@ -185,6 +187,11 @@ export class JsInputText extends LitElement {
           & .js-field_hint {
             color: var(--secondary-300);
           }
+        }
+      }
+      &.js-field--sm {
+        & .js-field_input {
+          height: 32px;
         }
       }
       &.js-field--error {
