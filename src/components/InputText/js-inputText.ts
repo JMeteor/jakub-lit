@@ -1,43 +1,42 @@
-import { css, html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { classMap } from 'lit/directives/class-map.js';
+import { css, html, LitElement } from 'lit'
+import { customElement, property } from 'lit/decorators.js'
+import { classMap } from 'lit/directives/class-map.js'
 
 @customElement('js-input-text')
 export class JsInputText extends LitElement {
+  @property({ type: String })
+  value = ''
 
   @property({ type: String })
-  value = '';
-
-  @property({ type: String })
-  size = 'md';
+  size = 'md'
 
   @property({ type: String })
   hierarchy = 'primary'
 
   @property({ type: Boolean })
-  showLabel= false;
+  showLabel = false
 
   @property({ type: Boolean })
-  showHint= false;
+  showHint = false
 
   @property({ type: Boolean })
-  showIcon= true;
+  showIcon = true
 
   @property({ type: Boolean })
-  showError= true;
+  showError = true
 
   @property({ type: Boolean, reflect: true })
-  disabled = false;
+  disabled = false
 
   @property({ type: String })
   placeholder = 'Input texts'
 
   _handleInput(event: InputEvent) {
-    const target = event.target as HTMLInputElement;
-    this.value = target.value;
+    const target = event.target as HTMLInputElement
+    this.value = target.value
     this.dispatchEvent(
       new InputEvent('input', { bubbles: true, composed: true })
-    );
+    )
   }
 
   render() {
@@ -49,25 +48,31 @@ export class JsInputText extends LitElement {
       'js-field--secondary': this.hierarchy === 'secondary',
       'js-field--disabled': this.disabled,
       'js-field--error': this.showError,
-    };
+    }
 
     return html`
       <div class=${classMap(classes)}>
-        ${this.showLabel ? html`<label class="js-field_label"><slot name="label"></slot></label>` : ''}
+        ${this.showLabel
+          ? html`<label class="js-field_label"
+              ><slot name="label"></slot
+            ></label>`
+          : ''}
         <div class="js-field_wrapper">
-          <input 
-            class="js-field_input" 
-            .value=${this.value}
+          <input
+            class="js-field_input"
+            value=${this.value}
             .disabled=${this.disabled}
             @input=${this._handleInput}
-            placeholder=${this.placeholder} 
-            type="text" 
+            placeholder=${this.placeholder}
+            type="text"
           />
           ${this.showIcon ? html`<span class="js-icon"></span>` : ''}
         </div>
-        ${ this.showHint || this.showError ? html`<p class="js-field_hint"><slot name="hint"></slot></p>` : ''}
+        ${this.showHint || this.showError
+          ? html`<p class="js-field_hint"><slot name="hint"></slot></p>`
+          : ''}
       </div>
-    `;
+    `
   }
 
   static styles = css`
@@ -114,7 +119,7 @@ export class JsInputText extends LitElement {
       height: 24px;
       right: 16px;
     }
-    
+
     .js-field {
       &.js-field--primary {
         .js-field_input {
@@ -127,15 +132,15 @@ export class JsInputText extends LitElement {
           color: var(--primary-500);
         }
         & .js-icon {
-          background: var(--primary-700)
+          background: var(--primary-700);
         }
       }
       &.js-field--secondary {
         & .js-field_input {
           border-color: var(--secondary-700);
           &::placeholder {
-          color: var(--secondary-500);
-        }
+            color: var(--secondary-500);
+          }
         }
         & .js-field_label {
           color: var(--secondary-700);
@@ -144,7 +149,7 @@ export class JsInputText extends LitElement {
           color: var(--secondary-500);
         }
         & .js-icon {
-          background: var(--secondary-700)
+          background: var(--secondary-700);
         }
       }
       &.js-field--disabled {
@@ -171,6 +176,5 @@ export class JsInputText extends LitElement {
         }
       }
     }
-    
   `
 }

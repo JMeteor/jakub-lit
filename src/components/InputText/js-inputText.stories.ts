@@ -1,9 +1,9 @@
-import { html } from "lit";
-import { Meta, StoryFn } from "@storybook/web-components";
-import "./js-inputText";
+import { html } from 'lit'
+import { Meta, StoryFn } from '@storybook/web-components'
+import './js-inputText'
 
-const  meta = {
-  title: "Components/InputText",
+const meta = {
+  title: 'Components/InputText',
   argTypes: {
     label: {
       control: { type: 'text' },
@@ -16,42 +16,42 @@ const  meta = {
     },
     size: {
       control: { type: 'radio' },
-      options: ['sm', 'md']
+      options: ['sm', 'md'],
     },
     hierarchy: {
       control: { type: 'radio' },
-      options: ['primary', 'secondary']
+      options: ['primary', 'secondary'],
     },
     showLabel: {
-      control: { type: 'boolean' }
+      control: { type: 'boolean' },
     },
     showIcon: {
-      control: { type: 'boolean' }
+      control: { type: 'boolean' },
     },
     showHint: {
-      control: { type: 'boolean' }
+      control: { type: 'boolean' },
     },
     showError: {
-      control: { type: 'boolean' }
+      control: { type: 'boolean' },
     },
     disabled: {
-      control: { type: 'boolean' }
-    }
-  }
+      control: { type: 'boolean' },
+    },
+  },
 } satisfies Meta
 export default meta
 
-export const InputText : StoryFn = (args) => html`
-  <js-input-text 
+export const InputText: StoryFn = (args) => html`
+  <js-input-text
     .disabled="${args.disabled}"
-    .size="${args.size}" 
+    .size="${args.size}"
     .hierarchy="${args.hierarchy}"
     .showLabel="${args.showLabel}"
     .showIcon="${args.showIcon}"
     .showHint="${args.showHint}"
     .showError="${args.showError}"
     .value="${args.value}"
-    @input="${ () => console.log('Input event fired!')}"
+    @input="${() => console.log('Input event fired!')}"
   >
     <span slot="label">${args.label}</span>
     <span slot="hint">${args.hint}</span>
