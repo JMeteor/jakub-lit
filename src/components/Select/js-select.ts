@@ -34,12 +34,36 @@ export class JsSelect extends LitElement {
   @property({ type: String })
   selected = ''
 
+  @property({ type: Boolean })
+  private dropdownOpen = false
+
   private onClick(event: Event) {
+    event.stopPropagation()
     const value = (event.target as HTMLLIElement).dataset.value
     if (value !== undefined) {
       this.selected = value
     }
     this.requestUpdate()
+    this.closeDropdown()
+  }
+
+  private toggleDropdown(event: Event) {
+    event.stopPropagation()
+    this.dropdownOpen = !this.dropdownOpen
+  }
+
+  private closeDropdown = () => {
+    this.dropdownOpen = false
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    window.addEventListener('click', this.closeDropdown)
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    window.removeEventListener('click', this.closeDropdown)
   }
 
   render() {
@@ -52,7 +76,7 @@ export class JsSelect extends LitElement {
       'js-select--disabled': this.disabled,
     }
 
-    return html`<div class=${classMap(classes)}>
+    return html`<div class=${classMap(classes)} @click="${this.toggleDropdown}">
       ${this.showLabel
         ? html`<label class="js-select_label"
             ><slot name="label"></slot
@@ -67,7 +91,12 @@ export class JsSelect extends LitElement {
           value="${this.selected}"
           ?disabled=${this.disabled}
         />
-        <ul @click="${this.onClick}" class="js-select_dropdown">
+        <ul
+          @click="${this.onClick}"
+          class="js-select_dropdown ${this.dropdownOpen
+            ? 'js-select_dropdown--open'
+            : ''}"
+        >
           ${this.options.map(
             (option) =>
               html`<li class="js-select_dropdown_item" data-value=${option}>
@@ -133,6 +162,10 @@ export class JsSelect extends LitElement {
       box-sizing: border-box;
       width: 100%;
       list-style: none;
+      display: none;
+      &.js-select_dropdown--open {
+        display: block;
+      }
     }
     .js-select_dropdown_item {
       cursor: pointer;
