@@ -1,6 +1,8 @@
 import { css, html, LitElement } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { classMap } from 'lit/directives/class-map.js'
+import { computePosition, offset, size } from '@floating-ui/dom'
+import { MaybeHTMLElement } from '../../helpers/types.ts'
 
 @customElement('js-select')
 export class JsSelect extends LitElement {
@@ -37,6 +39,45 @@ export class JsSelect extends LitElement {
   @property({ type: Boolean })
   private dropdownOpen = false
 
+  firstUpdated() {
+    const input: MaybeHTMLElement =
+      this.shadowRoot?.querySelector('.js-select_wrapper')
+    const dropdown: MaybeHTMLElement = this.shadowRoot?.querySelector(
+      '.js-select_dropdown'
+    )
+
+    if (input && dropdown) {
+      computePosition(input, dropdown, {
+        placement: 'bottom-start',
+        middleware: [
+          offset(4),
+          size({
+            apply({ rects }) {
+              Object.assign(dropdown.style, {
+                width: `${rects.reference.width}px`,
+              })
+            },
+          }),
+        ],
+      }).then(({ x, y }) => {
+        Object.assign(dropdown.style, {
+          left: `${x}px`,
+          top: `${y}px`,
+        })
+      })
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    window.addEventListener('click', this.closeDropdown)
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    window.removeEventListener('click', this.closeDropdown)
+  }
+
   private onClick(event: Event) {
     event.stopPropagation()
     const value = (event.target as HTMLLIElement).dataset.value
@@ -54,16 +95,6 @@ export class JsSelect extends LitElement {
 
   private closeDropdown = () => {
     this.dropdownOpen = false
-  }
-
-  connectedCallback() {
-    super.connectedCallback()
-    window.addEventListener('click', this.closeDropdown)
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback()
-    window.removeEventListener('click', this.closeDropdown)
   }
 
   render() {
@@ -112,9 +143,6 @@ export class JsSelect extends LitElement {
   }
 
   static styles = css`
-    .js-select_wrapper {
-      position: relative;
-    }
     .js-select_label {
       color: var(--primary-700);
       display: block;
@@ -150,7 +178,7 @@ export class JsSelect extends LitElement {
     .js-select_dropdown {
       background: var(--base-white);
       position: absolute;
-      top: calc(100% + 4px);
+      top: 0;
       left: 0;
       z-index: 100;
       margin: 0;
@@ -158,7 +186,7 @@ export class JsSelect extends LitElement {
       border-radius: 8px;
       box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
       box-sizing: border-box;
-      width: 100%;
+      width: max-content;
       list-style: none;
       display: none;
       &.js-select_dropdown--open {
