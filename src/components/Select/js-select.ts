@@ -83,6 +83,7 @@ export class JsSelect extends LitElement {
     const value = (event.target as HTMLLIElement).dataset.value
     if (value !== undefined) {
       this.selected = value
+      this.showError = false
     }
     this.requestUpdate()
     this.closeDropdown()

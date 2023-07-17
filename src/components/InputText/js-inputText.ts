@@ -206,6 +206,12 @@ export class JsInputText extends LitElement {
         & .js-field_hint {
           color: var(--base-error);
         }
+        & .js-field_input {
+          border-color: var(--base-error);
+        }
+        & js-icon {
+          background: var(--base-error);
+        }
       }
     }
   `
