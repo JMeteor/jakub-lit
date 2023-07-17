@@ -112,14 +112,10 @@ export class JsSelect extends LitElement {
   }
 
   static styles = css`
-    .js-select {
-      display: inline-block;
-      font-family: var(--font-inter);
-    }
     .js-select_wrapper {
       position: relative;
     }
-    .js-field_label {
+    .js-select_label {
       color: var(--primary-700);
       display: block;
       font-size: 14px;
@@ -152,9 +148,11 @@ export class JsSelect extends LitElement {
       margin: 4px 0 0 0;
     }
     .js-select_dropdown {
+      background: var(--base-white);
       position: absolute;
       top: calc(100% + 4px);
       left: 0;
+      z-index: 100;
       margin: 0;
       padding: 2px 0;
       border-radius: 8px;
@@ -173,6 +171,55 @@ export class JsSelect extends LitElement {
       padding: 6px 16px;
       &:hover {
         background: var(--primary-100);
+      }
+    }
+    .js-select {
+      display: inline-block;
+      font-family: var(--font-inter);
+      &.js-select--sm {
+        & .js-select_input {
+          height: 32px;
+        }
+        & .js-select_dropdown_item {
+          padding: 3px 16px;
+        }
+      }
+      &.js-select--secondary {
+        & .js-select_label,
+        & .js-select_hint {
+          color: var(--secondary-700);
+        }
+        & .js-select_input {
+          border-color: var(--secondary-700);
+          &::placeholder {
+            color: var(--secondary-500);
+          }
+        }
+      }
+      &.js-select--disabled {
+        cursor: default;
+        pointer-events: none;
+        & .js-select_label,
+        & .js-select_hint,
+        & .js-select_input {
+          color: var(--primary-300);
+        }
+        & .js-select_input {
+          border-color: var(--primary-300);
+        }
+        &.js-select--secondary {
+          & .js-select_label,
+          & .js-select_hint,
+          & .js-select_input {
+            color: var(--secondary-300);
+          }
+          & .js-select_input {
+            border-color: var(--secondary-300);
+            &::placeholder {
+              color: var(--secondary-300);
+            }
+          }
+        }
       }
     }
   `
