@@ -41,7 +41,7 @@ export class JsSelect extends LitElement {
 
   firstUpdated() {
     const input: MaybeHTMLElement =
-      this.shadowRoot?.querySelector('.js-select_wrapper')
+      this.shadowRoot?.querySelector('.js-select_input')
     const dropdown: MaybeHTMLElement = this.shadowRoot?.querySelector(
       '.js-select_dropdown'
     )
@@ -105,6 +105,7 @@ export class JsSelect extends LitElement {
       'js-select--primary': this.hierarchy === 'primary',
       'js-select--secondary': this.hierarchy === 'secondary',
       'js-select--disabled': this.disabled,
+      'js-select--error': this.showError,
     }
 
     return html`<div class=${classMap(classes)} @click="${this.toggleDropdown}">
@@ -136,8 +137,10 @@ export class JsSelect extends LitElement {
           )}
         </ul>
       </div>
-      ${this.showHint || this.showError
-        ? html`<p class="js-select_hint"><slot name="hint"></slot></p>`
+      ${this.showError
+        ? html`<p class="js-field_error"><slot name="error"></slot></p>`
+        : this.showHint
+        ? html`<p class="js-field_hint"><slot name="hint"></slot></p>`
         : ''}
     </div>`
   }
@@ -169,12 +172,19 @@ export class JsSelect extends LitElement {
         outline: none;
       }
     }
-    .js-select_hint {
-      color: var(--primary-500);
+    .js-field_hint,
+    .js-field_error {
       display: block;
       font-size: 12px;
       margin: 4px 0 0 0;
     }
+    .js-field_hint {
+      color: var(--primary-500);
+    }
+    .js-field_error {
+      color: var(--base-error);
+    }
+
     .js-select_dropdown {
       background: var(--base-white);
       position: absolute;
@@ -247,6 +257,11 @@ export class JsSelect extends LitElement {
               color: var(--secondary-300);
             }
           }
+        }
+      }
+      &.js-select--error {
+        & .js-select_input {
+          border-color: var(--base-error);
         }
       }
     }

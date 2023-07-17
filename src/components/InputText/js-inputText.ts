@@ -74,7 +74,9 @@ export class JsInputText extends LitElement {
               ></js-icon>`
             : ''}
         </div>
-        ${this.showHint || this.showError
+        ${this.showError
+          ? html`<p class="js-field_error"><slot name="error"></slot></p>`
+          : this.showHint
           ? html`<p class="js-field_hint"><slot name="hint"></slot></p>`
           : ''}
       </div>
@@ -116,11 +118,17 @@ export class JsInputText extends LitElement {
         outline: none;
       }
     }
-    .js-field_hint {
-      color: var(--primary-500);
+    .js-field_hint,
+    .js-field_error {
       display: block;
       font-size: 12px;
       margin: 4px 0 0 0;
+    }
+    .js-field_hint {
+      color: var(--primary-500);
+    }
+    .js-field_error {
+      color: var(--base-error);
     }
 
     js-icon {

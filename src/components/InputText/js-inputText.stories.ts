@@ -14,6 +14,9 @@ const meta = {
     hint: {
       control: { type: 'text' },
     },
+    error: {
+      control: { type: 'text' },
+    },
     size: {
       control: { type: 'radio' },
       options: ['sm', 'md'],
@@ -53,7 +56,8 @@ export const InputText: StoryFn = (args) => html`
     .value="${args.value}"
     @input="${() => console.log('Input event fired!')}"
   >
-    <span slot="label">${args.label}</span>
-    <span slot="hint">${args.hint}</span>
+    <span slot="label">${args.label || 'Select label'}</span>
+    <span slot="hint">${args.hint || 'Hint message'}</span>
+    <span slot="error">${args.error || 'Error message'}</span>
   </js-input-text>
 `

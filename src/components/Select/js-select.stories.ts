@@ -8,10 +8,10 @@ const meta = {
     label: {
       control: { type: 'text' },
     },
-    value: {
+    hint: {
       control: { type: 'text' },
     },
-    hint: {
+    error: {
       control: { type: 'text' },
     },
     size: {
@@ -54,7 +54,8 @@ export const Select: StoryFn = (args) => html`
     .placeholder="${'Placeholder'}"
     .options=${['Option 1', 'Option 2', 'Option 3']}
   >
-    <span slot="label">${args.label}</span>
-    <span slot="hint">${args.hint}</span>
+    <span slot="label">${args.label || 'Select label'}</span>
+    <span slot="hint">${args.hint || 'Hint message'}</span>
+    <span slot="error">${args.error || 'Error message'}</span>
   </js-select>
 `
