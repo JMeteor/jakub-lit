@@ -22,6 +22,25 @@ export class JsButton extends LitElement {
   @property({ type: Boolean, reflect: true })
   disabled = false
 
+  _iconColor() {
+    if (this.type === 'filled' && this.hierarchy === 'secondary') {
+      return 'var(--secondary-100)'
+    }
+    if (this.type === 'filled') {
+      return 'var(--primary-100)'
+    }
+    if (this.hierarchy === 'secondary' && this.disabled) {
+      return 'var(--secondary-300)'
+    }
+    if (this.hierarchy === 'secondary') {
+      return 'var(--secondary-700)'
+    }
+    if (this.disabled) {
+      return 'var(--primary-300)'
+    }
+    return 'var(--primary-700)'
+  }
+
   render() {
     const classes = {
       'js-button': true,
@@ -35,9 +54,21 @@ export class JsButton extends LitElement {
 
     return html`
       <button class=${classMap(classes)} ?disabled=${this.disabled}>
-        ${this.iconBefore ? html`<span class="js-icon"></span>` : ''}
+        ${this.iconBefore
+          ? html`<js-icon
+              .size=${this.size}
+              .color=${this._iconColor()}
+              .name=${'chevron-down'}
+            />`
+          : ''}
         <slot></slot>
-        ${this.iconAfter ? html`<span class="js-icon"></span>` : ''}
+        ${this.iconAfter
+          ? html`<js-icon
+              .size=${this.size}
+              .color=${this._iconColor()}
+              .name=${'chevron-down'}
+            />`
+          : ''}
       </button>
     `
   }
@@ -76,9 +107,6 @@ export class JsButton extends LitElement {
         background: var(--primary-700);
         border-color: var(--primary-700);
         color: var(--primary-100);
-        & .js-icon {
-          background: white;
-        }
         &:hover {
           background: var(--primary-500);
           border-color: var(--primary-500);
@@ -97,9 +125,6 @@ export class JsButton extends LitElement {
         background: white;
         border-color: var(--primary-700);
         color: var(--primary-700);
-        & .js-icon {
-          background: var(--primary-700);
-        }
         &:hover {
           background: var(--primary-100);
           border-color: var(--primary-500);
@@ -118,9 +143,6 @@ export class JsButton extends LitElement {
         background: var(--secondary-700);
         border-color: var(--secondary-700);
         color: var(--secondary-100);
-        & .js-icon {
-          background: var(--secondary-100);
-        }
         &:hover {
           background: var(--secondary-500);
           border-color: var(--secondary-500);
@@ -138,9 +160,6 @@ export class JsButton extends LitElement {
           background: white;
           border-color: var(--secondary-700);
           color: var(--secondary-700);
-          & .js-icon {
-            background: var(--secondary-700);
-          }
           &:hover {
             background: var(--secondary-100);
             border-color: var(--secondary-500);

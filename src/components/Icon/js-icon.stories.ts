@@ -24,5 +24,9 @@ const meta = {
 export default meta
 
 export const Icon: StoryFn = (args) => html`
-  <js-icon .size="${args.size}" .name="${args.name}" .color="${args.color}" />
+  <js-icon
+    .size="${args.size || 'md'}"
+    .name="${args.name || 'chevron-down'}"
+    .color="${args.color || 'var(--primary-700)'}"
+  />
 `

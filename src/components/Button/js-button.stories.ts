@@ -37,10 +37,10 @@ export const Button: StoryFn = (args) => html`
   <js-button
     .disabled="${args.disabled}"
     .size="${args.size}"
-    .hierarchy="${args.hierarchy}"
+    .hierarchy="${args.hierarchy || 'primary'}"
     .type="${args.type}"
     .iconBefore="${args.iconBefore}"
     .iconAfter="${args.iconAfter}"
-    >${args.text}</js-button
+    >${args.text || 'Button CTa'}</js-button
   >
 `
