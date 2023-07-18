@@ -13,10 +13,16 @@ const meta = {
       control: 'radio',
       options: ['chevron-down', 'info-circle'],
     },
+    color: {
+      control: {
+        type: 'color',
+        presetColors: ['#d8b2e6', '#7e329a', '#eaebad', '#a2a428'],
+      },
+    },
   },
 } satisfies Meta
 export default meta
 
 export const Icon: StoryFn = (args) => html`
-  <js-icon .size="${args.size}" .name="${args.name}" />
+  <js-icon .size="${args.size}" .name="${args.name}" .color="${args.color}" />
 `

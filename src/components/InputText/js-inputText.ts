@@ -39,6 +39,22 @@ export class JsInputText extends LitElement {
     )
   }
 
+  _iconColor() {
+    if (this.showError) {
+      return 'var(--base-error)'
+    }
+    if (this.hierarchy === 'secondary' && this.disabled) {
+      return 'var(--secondary-300)'
+    }
+    if (this.hierarchy === 'secondary') {
+      return 'var(--secondary-700)'
+    }
+    if (this.disabled) {
+      return 'var(--primary-300)'
+    }
+    return 'var(--primary-700)'
+  }
+
   render() {
     const classes = {
       'js-field': true,
@@ -68,9 +84,9 @@ export class JsInputText extends LitElement {
           />
           ${this.showIcon
             ? html` <js-icon
-                .disabled=${this.disabled}
-                .hierarchy=${this.hierarchy}
                 .size=${this.size}
+                .name=${'info-circle'}
+                .color=${this._iconColor()}
               ></js-icon>`
             : ''}
         </div>
@@ -144,9 +160,6 @@ export class JsInputText extends LitElement {
         & .js-field_hint {
           color: var(--primary-500);
         }
-        & .js-icon {
-          background: var(--primary-700);
-        }
       }
       &.js-field--disabled {
         & .js-field_label {
@@ -158,9 +171,6 @@ export class JsInputText extends LitElement {
           &::placeholder {
             color: var(--primary-300);
           }
-        }
-        & js-icon {
-          background: var(--primary-300);
         }
         & .js-field_hint {
           color: var(--primary-300);
@@ -178,9 +188,6 @@ export class JsInputText extends LitElement {
         }
         & .js-field_hint {
           color: var(--secondary-500);
-        }
-        & js-icon {
-          background: var(--secondary-700);
         }
         &.js-field--disabled {
           & .js-field_label {
@@ -208,9 +215,6 @@ export class JsInputText extends LitElement {
         }
         & .js-field_input {
           border-color: var(--base-error);
-        }
-        & js-icon {
-          background: var(--base-error);
         }
       }
     }

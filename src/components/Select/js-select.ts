@@ -41,7 +41,7 @@ export class JsSelect extends LitElement {
 
   firstUpdated() {
     const input: MaybeHTMLElement =
-      this.shadowRoot?.querySelector('.js-select_input')
+      this.shadowRoot?.querySelector('.js-select_wrapper')
     const dropdown: MaybeHTMLElement = this.shadowRoot?.querySelector(
       '.js-select_dropdown'
     )
@@ -98,6 +98,22 @@ export class JsSelect extends LitElement {
     this.dropdownOpen = false
   }
 
+  _iconColor() {
+    if (this.showError) {
+      return 'var(--base-error)'
+    }
+    if (this.hierarchy === 'secondary' && this.disabled) {
+      return 'var(--secondary-300)'
+    }
+    if (this.hierarchy === 'secondary') {
+      return 'var(--secondary-700)'
+    }
+    if (this.disabled) {
+      return 'var(--primary-300)'
+    }
+    return 'var(--primary-700)'
+  }
+
   render() {
     const classes = {
       'js-select': true,
@@ -124,29 +140,41 @@ export class JsSelect extends LitElement {
           value="${this.selected}"
           ?disabled=${this.disabled}
         />
-        <ul
-          @click="${this.onClick}"
-          class="js-select_dropdown ${this.dropdownOpen
-            ? 'js-select_dropdown--open'
-            : ''}"
-        >
-          ${this.options.map(
-            (option) =>
-              html`<li class="js-select_dropdown_item" data-value=${option}>
-                ${option}
-              </li>`
-          )}
-        </ul>
+        ${this.showIcon
+          ? html` <js-icon
+              .size=${this.size}
+              .name=${'chevron-down'}
+              .color=${this._iconColor()}
+            ></js-icon>`
+          : ''}
       </div>
+      <ul
+        @click="${this.onClick}"
+        class="js-select_dropdown ${this.dropdownOpen
+          ? 'js-select_dropdown--open'
+          : ''}"
+      >
+        ${this.options.map(
+          (option) =>
+            html`<li class="js-select_dropdown_item" data-value=${option}>
+              ${option}
+            </li>`
+        )}
+      </ul>
       ${this.showError
-        ? html`<p class="js-field_error"><slot name="error"></slot></p>`
+        ? html`<p class="js-select_error"><slot name="error"></slot></p>`
         : this.showHint
-        ? html`<p class="js-field_hint"><slot name="hint"></slot></p>`
+        ? html`<p class="js-select_hint"><slot name="hint"></slot></p>`
         : ''}
     </div>`
   }
 
   static styles = css`
+    .js-select_wrapper {
+      display: inline-flex;
+      align-items: center;
+      position: relative;
+    }
     .js-select_label {
       color: var(--primary-700);
       display: block;
@@ -173,16 +201,21 @@ export class JsSelect extends LitElement {
         outline: none;
       }
     }
-    .js-field_hint,
-    .js-field_error {
+    js-icon {
+      cursor: pointer;
+      position: absolute;
+      right: 16px;
+    }
+    .js-select_hint,
+    .js-select_error {
       display: block;
       font-size: 12px;
       margin: 4px 0 0 0;
     }
-    .js-field_hint {
+    .js-select_hint {
       color: var(--primary-500);
     }
-    .js-field_error {
+    .js-select_error {
       color: var(--base-error);
     }
 
